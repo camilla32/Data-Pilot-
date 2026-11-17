@@ -1,8 +1,8 @@
-🚀 Data Pilot — Intelligent Sales Analytics
+# 🚀 Data Pilot — Intelligent Sales Analytics
 
 Dashboard de Vendas e Assistente Inteligente para Análise de Dados
 
-📌 Sobre o projeto
+## 📌 Sobre o projeto
 
 O Data Pilot é uma aplicação de análise de dados comerciais desenvolvida para facilitar o acompanhamento de indicadores de vendas e transformar dados em informações úteis para a tomada de decisões.
 
@@ -10,7 +10,7 @@ O projeto combina um dashboard interativo com uma interface de assistente conver
 
 A proposta é evoluir a aplicação para um agente de Inteligência Artificial capaz de interpretar perguntas, selecionar ferramentas de análise e apresentar respostas fundamentadas em dados calculados pelo Python.
 
-🎯 Objetivo
+## 🎯 Objetivo
 
 Desenvolver uma solução de análise comercial que integre:
 
@@ -98,7 +98,7 @@ identificar_melhor_categoria()
 
 Identificar a categoria de maior receita
 
-🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias utilizadas
 
 Tecnologia
 
@@ -128,7 +128,7 @@ Google Fonts
 
 Tipografia
 
-Tecnologias previstas para a evolução do projeto:
+## Tecnologias previstas para a evolução do projeto:
 
 Python para processamento e análise de dados.
 
@@ -144,7 +144,7 @@ Abra o arquivo index.html diretamente no navegador ou utilize a extensão Live S
 
 Requisito: conexão com a internet para carregar as bibliotecas e fontes externas utilizadas pela interface.
 
-🧠 Arquitetura e lógica do agente
+## 🧠 Arquitetura e lógica do agente
 
 O projeto foi planejado com uma arquitetura em que cada componente possui uma responsabilidade específica.
 
@@ -173,13 +173,13 @@ Retorno dos resultados
    v
 IA interpreta e explica a resposta
 
-Princípio fundamental
+## Princípio fundamental
 
 Python calcula. A IA interpreta e explica.
 
 O modelo não deve inventar, estimar ou alterar indicadores. As respostas devem ser fundamentadas nos resultados efetivamente retornados pelas funções de análise.
 
-📊 Dados utilizados
+## 📊 Dados utilizados
 
 O protótipo utiliza uma base de vendas demonstrativa, com registros distribuídos entre 12 meses e quatro categorias:
 
@@ -193,10 +193,9 @@ Móveis.
 
 Os dados são fictícios e foram utilizados exclusivamente para demonstrar as funcionalidades da aplicação.
 
-🚧 Próximas etapas
+## 🚧 Próximas etapas
 
 O Data Pilot está em desenvolvimento incremental.
-
 
 Criação do backend em Python
 Integração com Pandas e base CSV
@@ -207,7 +206,7 @@ Implementação da seleção automática de ferramentas
 
 Testes e validação das respostas
 
-💡 Diferencial do projeto
+## 💡 Diferencial do projeto
 
 O Data Pilot busca demonstrar como a combinação de análise de dados e Inteligência Artificial pode tornar as informações comerciais mais acessíveis.
 
@@ -215,7 +214,7 @@ Em vez de depender exclusivamente de consultas manuais ou da interpretação de 
 
 A proposta é transformar indicadores em respostas contextualizadas, mantendo a confiabilidade dos cálculos e a transparência das análises.
 
-👩‍💻 Autoria
+## 👩‍💻 Autoria
 
 Projeto desenvolvido por Camila Silva como iniciativa prática de aprendizagem e aplicação de conhecimentos em:
 
