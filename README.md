@@ -138,14 +138,6 @@ API de Inteligência Artificial para interpretação das perguntas e seleção d
 
 Backend para comunicação entre o frontend, Python e o modelo de IA.
 
-📂 Estrutura do projeto
-
-DATA-PILOT/
-│
-├── index.hml
-│
-└── README.md
-
 ## 4. Abrir a aplicação
 
 Abra o arquivo index.html diretamente no navegador ou utilize a extensão Live Server no Visual Studio Code.
