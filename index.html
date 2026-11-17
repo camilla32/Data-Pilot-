@@ -1,0 +1,1963 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Pilot | Intelligent Sales Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root{
+  --bg:#08111f;
+  --sidebar:#0c192a;
+  --card:#101f32;
+  --hover:#142840;
+  --border:#1d344a;
+  --teal:#20c9b5;
+  --teal2:#65e6d5;
+  --text:#f1f5f9;
+  --muted:#91a4b8;
+  --blue:#4389f5;
+  --purple:#a78bfa;
+  --orange:#fb923c;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:Inter,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+button,input,select{font:inherit}
+
+.app{display:flex;min-height:100vh}
+
+.sidebar{
+  width:250px;
+  background:var(--sidebar);
+  border-right:1px solid var(--border);
+  padding:28px 18px;
+  display:flex;
+  flex-direction:column;
+  flex-shrink:0;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:48px;
+  padding-left:8px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  background:linear-gradient(135deg,var(--teal),#167f91);
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  color:#06131d;
+  font-size:20px;
+}
+
+.logo h2{font-size:19px;letter-spacing:-.7px}
+.logo h2 span{color:var(--teal)}
+
+.logo small{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:2px;
+  margin-top:3px;
+}
+
+.menu-label{
+  font-size:10px;
+  color:#60758c;
+  font-weight:700;
+  letter-spacing:1.5px;
+  padding:0 12px;
+  margin-bottom:14px;
+}
+
+.menu{display:flex;flex-direction:column;gap:8px}
+
+.menu-item{
+  background:transparent;
+  border:0;
+  color:var(--muted);
+  padding:14px 13px;
+  border-radius:9px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  cursor:pointer;
+  font-size:13px;
+  transition:.2s;
+}
+
+.menu-item:hover,.menu-item.active{
+  background:#20c9b51f;
+  color:var(--teal);
+}
+
+.menu-item i{width:18px}
+
+.sidebar-bottom{
+  margin-top:auto;
+  border-top:1px solid var(--border);
+  padding-top:22px;
+}
+
+.profile{display:flex;align-items:center;gap:10px;padding:8px}
+
+.avatar{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#183f53;
+  color:var(--teal2);
+  display:grid;
+  place-items:center;
+}
+
+.profile strong{font-size:12px}
+
+.profile small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px;
+}
+
+.main{flex:1;min-width:0;padding:30px 36px}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:35px;
+  gap:20px;
+}
+
+.page-title h1{font-size:25px;letter-spacing:-.8px}
+
+.page-title p{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:8px;
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:var(--teal2);
+  font-size:11px;
+  background:#20c9b517;
+  padding:9px 13px;
+  border-radius:20px;
+}
+
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--teal);
+}
+
+.date-select,.category-select{
+  background:var(--card);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 13px;
+  font-size:11px;
+  outline:none;
+  cursor:pointer;
+}
+
+.page-section{display:none}
+.page-section.active{display:block}
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.section-header h2{font-size:15px}
+
+.section-header p{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.metrics-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:17px;
+  margin-bottom:28px;
+}
+
+.metric-card,.chart-card,.table-card,.agent-chat,.agent-panel{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.metric-card{padding:21px;transition:.2s}
+
+.metric-card:hover{
+  background:var(--hover);
+  transform:translateY(-3px);
+}
+
+.metric-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.metric-top span{color:var(--muted);font-size:11px}
+
+.metric-icon{
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  border-radius:9px;
+  font-size:14px;
+}
+
+.icon-green{background:#20c9b51f;color:var(--teal)}
+.icon-blue{background:#4389f51f;color:var(--blue)}
+.icon-purple{background:#a78bfa1f;color:var(--purple)}
+.icon-orange{background:#fb923c1f;color:var(--orange)}
+
+.metric-value{
+  font-size:25px;
+  font-weight:700;
+  letter-spacing:-1px;
+}
+
+.metric-footer{
+  margin-top:11px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.positive{color:var(--teal);font-weight:600}
+
+.charts-grid{
+  display:grid;
+  grid-template-columns:1.65fr 1fr;
+  gap:18px;
+  margin-bottom:25px;
+}
+
+.chart-card,.table-card{padding:22px;min-width:0}
+
+.chart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  gap:10px;
+}
+
+.chart-header h3{font-size:13px}
+
+.chart-header p{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:5px;
+}
+
+.chart-container{position:relative;height:260px}
+
+.table-card{overflow-x:auto}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+  min-width:500px;
+}
+
+th{
+  text-align:left;
+  color:var(--muted);
+  font-size:10px;
+  padding:13px;
+  border-bottom:1px solid var(--border);
+}
+
+td{
+  padding:15px 13px;
+  font-size:11px;
+  border-bottom:1px solid #1d344aa6;
+}
+
+.category-tag{
+  background:#20c9b51a;
+  color:var(--teal);
+  padding:6px 9px;
+  border-radius:5px;
+  font-size:10px;
+}
+
+.agent-workspace{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 290px;
+  gap:20px;
+}
+
+.agent-main{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  min-width:0;
+}
+
+.agent-intro{
+  background:linear-gradient(120deg,#102c40,#103a45);
+  border:1px solid #205263;
+  border-radius:13px;
+  padding:22px;
+  display:flex;
+  align-items:center;
+  gap:17px;
+}
+
+.agent-intro-icon{
+  width:53px;
+  height:53px;
+  background:#20c9b526;
+  color:var(--teal2);
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-size:23px;
+  flex-shrink:0;
+}
+
+.agent-intro h3{font-size:16px;margin-bottom:7px}
+
+.agent-intro p{
+  color:#a6bbcb;
+  font-size:11px;
+  line-height:1.7;
+}
+
+.agent-status{
+  margin-left:auto;
+  color:var(--teal2);
+  font-size:10px;
+  white-space:nowrap;
+}
+
+.agent-chat{
+  display:flex;
+  flex-direction:column;
+  min-height:510px;
+  overflow:hidden;
+}
+
+.agent-chat-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:17px 20px;
+  border-bottom:1px solid var(--border);
+}
+
+.agent-chat-header h3{font-size:12px}
+
+.agent-chat-header small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:5px;
+}
+
+.agent-chat-header>span{color:var(--teal);font-size:10px}
+
+.agent-messages{
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  min-height:320px;
+  max-height:440px;
+  overflow-y:auto;
+  flex:1;
+}
+
+.agent-message{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  max-width:90%;
+}
+
+.agent-message.user{align-self:flex-end}
+
+.agent-message small{font-size:9px;color:var(--muted)}
+
+.agent-bubble{
+  background:#192e43;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px 16px;
+  font-size:11px;
+  line-height:1.8;
+  overflow-wrap:anywhere;
+  white-space:pre-wrap;
+}
+
+.agent-message.user .agent-bubble{
+  background:#20c9b522;
+  border-color:#20c9b540;
+}
+
+.agent-result{
+  margin-top:10px;
+  padding:13px;
+  background:#20c9b512;
+  border:1px solid #20c9b533;
+  border-radius:9px;
+}
+
+.agent-result strong{color:var(--teal2);font-size:17px}
+.agent-result small{display:block;margin-bottom:5px}
+
+.agent-composer{padding:18px;border-top:1px solid var(--border)}
+
+.agent-input-row{display:flex;gap:10px}
+
+.agent-input-row input{
+  flex:1;
+  min-width:0;
+  padding:14px;
+  background:#091727;
+  border:1px solid var(--border);
+  border-radius:9px;
+  color:white;
+  font-size:11px;
+  outline:none;
+}
+
+.agent-input-row input:focus{border-color:var(--teal)}
+
+.agent-send{
+  width:46px;
+  border:0;
+  border-radius:9px;
+  background:var(--teal);
+  color:#07151d;
+  cursor:pointer;
+}
+
+.agent-send:hover{background:var(--teal2)}
+.agent-send:disabled{opacity:.5;cursor:not-allowed}
+
+.agent-suggestions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:13px;
+}
+
+.agent-suggestions button{
+  padding:8px 11px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  font-size:9px;
+  cursor:pointer;
+}
+
+.agent-suggestions button:hover{
+  color:var(--teal);
+  border-color:var(--teal);
+}
+
+.agent-sidebar{display:flex;flex-direction:column;gap:15px}
+
+.agent-panel{padding:19px}
+.agent-panel h4{font-size:12px;margin-bottom:15px}
+
+.agent-panel-description{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:15px;
+}
+
+.agent-tool{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.agent-tool:last-child{border-bottom:0}
+
+.tool-icon{
+  width:31px;
+  height:31px;
+  background:#20c9b51a;
+  color:var(--teal);
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  flex-shrink:0;
+}
+
+.agent-tool strong{display:block;font-size:10px}
+
+.agent-tool small{
+  display:block;
+  font-size:9px;
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.tool-state{margin-left:auto;font-size:9px;color:var(--teal)}
+
+.execution-step{
+  display:flex;
+  gap:10px;
+  margin-bottom:14px;
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.5;
+}
+
+.execution-step:last-child{margin-bottom:0}
+.execution-step i{color:var(--teal);margin-top:2px}
+.execution-step.active i{color:#fbbf24}
+.execution-step.done i{color:var(--teal2)}
+
+.agent-rule{
+  background:#20c9b512;
+  border:1px solid #20c9b533;
+  color:#a9ded8;
+  border-radius:10px;
+  padding:14px;
+  font-size:10px;
+  line-height:1.8;
+}
+
+.agent-rule i{color:var(--teal);margin-right:5px}
+
+.agent-note{
+  font-size:9px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-top:12px;
+}
+
+.footer{
+  text-align:center;
+  color:#60758c;
+  font-size:9px;
+  padding:30px 0 5px;
+}
+
+@media(max-width:1100px){
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-grid{grid-template-columns:1fr}
+  .agent-workspace{grid-template-columns:1fr}
+}
+
+@media(max-width:750px){
+  .sidebar{width:75px;padding:20px 10px}
+  .logo{justify-content:center;padding:0}
+  .logo-text,.menu-label,.menu-item span,.profile-info{display:none}
+  .menu-item{justify-content:center;padding:14px 5px}
+  .menu-item i{width:auto;font-size:18px}
+  .profile{justify-content:center;padding:0}
+  .main{padding:22px 15px}
+  .topbar{align-items:flex-start;flex-direction:column}
+  .top-actions{gap:8px}
+  .section-header{align-items:flex-start;flex-direction:column}
+}
+
+@media(max-width:600px){
+  .metrics-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .metric-card{padding:14px}
+  .metric-value{font-size:18px}
+  .metric-top span{font-size:9px}
+  .agent-intro{align-items:flex-start;flex-wrap:wrap}
+  .agent-status{margin-left:0;width:100%}
+  .agent-chat{min-height:460px}
+  .agent-chat-header{gap:10px;align-items:flex-start;flex-direction:column}
+}
+
+@media(max-width:420px){
+  .metrics-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon"><i class="fa-solid fa-chart-line"></i></div>
+    <div class="logo-text">
+      <h2>DATA <span>PILOT</span></h2>
+      <small>INTELLIGENT ANALYTICS</small>
+    </div>
+  </div>
+
+  <p class="menu-label">MENU PRINCIPAL</p>
+
+  <nav class="menu">
+    <button class="menu-item active" data-page="dashboard">
+      <i class="fa-solid fa-chart-pie"></i><span>Dashboard</span>
+    </button>
+    <button class="menu-item" data-page="assistant">
+      <i class="fa-solid fa-robot"></i><span>Assistente IA</span>
+    </button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="profile">
+      <div class="avatar"><i class="fa-solid fa-user"></i></div>
+      <div class="profile-info">
+        <strong>Data Pilot</strong>
+        <small>Sales Analytics</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div class="page-title">
+    <h1 id="page-heading">Dashboard de Vendas</h1>
+    <p id="page-description">Acompanhe os indicadores e o desempenho comercial.</p>
+  </div>
+
+  <div class="top-actions">
+    <div class="status">
+      <span class="status-dot"></span>
+      Ambiente demonstrativo
+    </div>
+
+    <select class="date-select" id="periodFilter" aria-label="Período">
+      <option value="all">Todo o período</option>
+      <option value="2026">Ano de 2026</option>
+    </select>
+  </div>
+</header>
+
+<!-- DASHBOARD -->
+
+<section class="page-section active" id="dashboard">
+
+  <div class="section-header">
+    <div>
+      <h2>Visão geral</h2>
+      <p>Resumo dos resultados de vendas</p>
+    </div>
+
+    <select class="category-select" id="categoryFilter" aria-label="Filtrar categoria">
+      <option value="Todas">Todas as categorias</option>
+      <option>Eletrônicos</option>
+      <option>Informática</option>
+      <option>Acessórios</option>
+      <option>Móveis</option>
+    </select>
+  </div>
+
+  <div class="metrics-grid">
+
+    <div class="metric-card">
+      <div class="metric-top">
+        <span>Receita total</span>
+        <div class="metric-icon icon-green"><i class="fa-solid fa-dollar-sign"></i></div>
+      </div>
+      <div class="metric-value" id="revenueValue">R$ 0,00</div>
+      <div class="metric-footer"><span class="positive">Dados demonstrativos</span></div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-top">
+        <span>Total de pedidos</span>
+        <div class="metric-icon icon-blue"><i class="fa-solid fa-bag-shopping"></i></div>
+      </div>
+      <div class="metric-value" id="ordersValue">0</div>
+      <div class="metric-footer">Pedidos registrados</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-top">
+        <span>Ticket médio</span>
+        <div class="metric-icon icon-purple"><i class="fa-solid fa-receipt"></i></div>
+      </div>
+      <div class="metric-value" id="ticketValue">R$ 0,00</div>
+      <div class="metric-footer">Receita por pedido</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-top">
+        <span>Produtos vendidos</span>
+        <div class="metric-icon icon-orange"><i class="fa-solid fa-box"></i></div>
+      </div>
+      <div class="metric-value" id="productsValue">0</div>
+      <div class="metric-footer">Unidades comercializadas</div>
+    </div>
+
+  </div>
+
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <h3>Receita mensal</h3>
+          <p>Desempenho financeiro ao longo do ano</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <div>
+          <h3>Vendas por categoria</h3>
+          <p>Distribuição da receita</p>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="categoryChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="table-card">
+    <div class="chart-header">
+      <div>
+        <h3>Desempenho por categoria</h3>
+        <p>Resumo comercial das categorias</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>CATEGORIA</th>
+          <th>PEDIDOS</th>
+          <th>UNIDADES</th>
+          <th>RECEITA</th>
+        </tr>
+      </thead>
+      <tbody id="categoryTable"></tbody>
+    </table>
+  </div>
+
+</section>
+
+<!-- ABA DO ASSISTENTE -->
+
+<section class="page-section" id="assistant">
+
+  <div class="section-header">
+    <div>
+      <h2>Data Pilot AI Agent</h2>
+      <p>Seu assistente inteligente para análise conversacional de vendas.</p>
+    </div>
+  </div>
+
+  <div class="agent-workspace">
+
+    <div class="agent-main">
+
+      <div class="agent-intro">
+        <div class="agent-intro-icon">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+
+        <div>
+          <h3>Intelligent Sales Assistant</h3>
+          <p>Faça perguntas em português. O agente interpreta sua intenção e consulta os dados demonstrativos para responder.</p>
+        </div>
+
+        <div class="agent-status">
+          <i class="fa-solid fa-circle"></i> Agente local ativo
+        </div>
+      </div>
+
+      <div class="agent-chat">
+
+        <div class="agent-chat-header">
+          <div>
+            <h3><i class="fa-solid fa-comments"></i> Conversa com seus dados</h3>
+            <small>Data Pilot conversational analytics</small>
+          </div>
+
+          <span>
+            <i class="fa-solid fa-shield-halved"></i>
+            Respostas fundamentadas em dados
+          </span>
+        </div>
+
+        <div class="agent-messages" id="agentMessages" aria-live="polite">
+
+          <div class="agent-message">
+            <small>DATA PILOT AI AGENT</small>
+
+            <div class="agent-bubble">Olá! Sou o assistente inteligente do Data Pilot.
+
+Posso consultar indicadores, comparar categorias, analisar a receita mensal e identificar os principais resultados comerciais.
+
+Escolha uma sugestão ou escreva sua pergunta. Estou em modo demonstrativo: interpreto perguntas comuns e calculo as respostas com os dados desta página. A integração com IA e Python será uma próxima etapa.</div>
+          </div>
+
+        </div>
+
+        <div class="agent-composer">
+
+          <form id="agentForm">
+            <div class="agent-input-row">
+
+              <input
+                type="text"
+                id="agentInput"
+                placeholder="Ex.: Qual categoria teve maior receita?"
+                autocomplete="off"
+                required
+              >
+
+              <button
+                type="submit"
+                class="agent-send"
+                id="agentSend"
+                aria-label="Enviar pergunta"
+              >
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+
+            </div>
+          </form>
+
+          <div class="agent-suggestions">
+            <button type="button" data-query="Qual foi a receita total?">Receita total</button>
+            <button type="button" data-query="Qual categoria teve maior receita?">Melhor categoria</button>
+            <button type="button" data-query="Qual foi o ticket médio?">Ticket médio</button>
+            <button type="button" data-query="Qual foi o melhor mês?">Melhor mês</button>
+            <button type="button" data-query="Compare as categorias de vendas.">Comparar categorias</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL LATERAL DO AGENTE -->
+
+    <aside class="agent-sidebar">
+
+      <div class="agent-panel">
+        <h4><i class="fa-solid fa-screwdriver-wrench"></i> Ferramentas do agente</h4>
+
+        <p class="agent-panel-description">
+          Funções de análise disponíveis. Nesta versão, os cálculos são executados localmente em JavaScript sobre a base demonstrativa.
+        </p>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-dollar-sign"></i></div>
+          <div>
+            <strong>Receita total</strong>
+            <small>calcular_receita_total()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+          <div>
+            <strong>Total de pedidos</strong>
+            <small>contar_pedidos()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-receipt"></i></div>
+          <div>
+            <strong>Ticket médio</strong>
+            <small>calcular_ticket_medio()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <div>
+            <strong>Receita por categoria</strong>
+            <small>receita_por_categoria()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div>
+            <strong>Receita mensal</strong>
+            <small>receita_por_mes()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+
+        <div class="agent-tool">
+          <div class="tool-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div>
+            <strong>Melhor categoria</strong>
+            <small>identificar_melhor_categoria()</small>
+          </div>
+          <span class="tool-state">Python</span>
+        </div>
+      </div>
+
+      <div class="agent-panel">
+        <h4><i class="fa-solid fa-diagram-project"></i> Fluxo de execução</h4>
+
+        <div class="execution-step" id="step-question">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>Receber pergunta em português</span>
+        </div>
+
+        <div class="execution-step" id="step-tool">
+          <i class="fa-solid fa-brain"></i>
+          <span>IA identifica a ferramenta adequada</span>
+        </div>
+
+        <div class="execution-step" id="step-python">
+          <i class="fa-solid fa-code"></i>
+          <span>Python executa a função</span>
+        </div>
+
+        <div class="execution-step" id="step-data">
+          <i class="fa-solid fa-database"></i>
+          <span>Retorna as métricas calculadas</span>
+        </div>
+
+        <div class="execution-step" id="step-answer">
+          <i class="fa-solid fa-comment-dots"></i>
+          <span>IA explica o resultado</span>
+        </div>
+
+        <p class="agent-note" id="executionStatus">
+          Aguardando uma pergunta. O fluxo será conectado ao backend na próxima etapa.
+        </p>
+      </div>
+
+      <div class="agent-rule">
+        <i class="fa-solid fa-shield-halved"></i>
+        <strong>Princípio fundamental</strong>
+        <br><br>
+        Python calcula. A IA interpreta e explica. O modelo não deve inventar, estimar ou alterar indicadores.
+      </div>
+
+    </aside>
+  </div>
+</section>
+
+<footer class="footer">
+  DATA PILOT © 2026 | INTELLIGENT SALES ANALYTICS
+  <br><br>
+  Python + Data Analysis + Artificial Intelligence
+</footer>
+
+</main>
+</div>
+
+<script>
+
+// ============================================
+// 1. NAVEGAÇÃO ENTRE AS ABAS
+// ============================================
+
+document.querySelectorAll(".menu-item").forEach(item=>{
+  item.addEventListener("click",()=>{
+    document.querySelectorAll(".menu-item").forEach(x=>x.classList.remove("active"));
+    item.classList.add("active");
+
+    document.querySelectorAll(".page-section").forEach(x=>x.classList.remove("active"));
+
+    document.getElementById(item.dataset.page).classList.add("active");
+
+    const dashboard=item.dataset.page==="dashboard";
+
+    document.getElementById("page-heading").textContent=
+      dashboard?"Dashboard de Vendas":"Assistente de IA";
+
+    document.getElementById("page-description").textContent=
+      dashboard
+      ?"Acompanhe os indicadores e o desempenho comercial."
+      :"Converse com seus dados e descubra novas informações.";
+  });
+});
+
+
+// ============================================
+// 2. BASE DE DADOS DEMONSTRATIVA
+// ============================================
+
+const salesData=[
+
+["Jan","Eletrônicos",12500,15,20],
+["Jan","Informática",8200,12,18],
+["Jan","Acessórios",3500,20,35],
+["Jan","Móveis",6700,8,10],
+
+["Fev","Eletrônicos",14800,17,22],
+["Fev","Informática",9100,13,20],
+["Fev","Acessórios",4200,24,40],
+["Fev","Móveis",7300,9,12],
+
+["Mar","Eletrônicos",16200,19,25],
+["Mar","Informática",10500,15,22],
+["Mar","Acessórios",4800,27,45],
+["Mar","Móveis",8200,10,13],
+
+["Abr","Eletrônicos",17500,20,28],
+["Abr","Informática",11800,16,24],
+["Abr","Acessórios",5300,30,48],
+["Abr","Móveis",9100,11,14],
+
+["Mai","Eletrônicos",19200,22,30],
+["Mai","Informática",12500,17,25],
+["Mai","Acessórios",6100,32,52],
+["Mai","Móveis",9800,12,16],
+
+["Jun","Eletrônicos",21000,24,32],
+["Jun","Informática",13800,18,28],
+["Jun","Acessórios",6800,35,58],
+["Jun","Móveis",10500,13,17],
+
+["Jul","Eletrônicos",22500,26,35],
+["Jul","Informática",14500,19,30],
+["Jul","Acessórios",7200,38,62],
+["Jul","Móveis",11200,14,19],
+
+["Ago","Eletrônicos",23800,27,38],
+["Ago","Informática",15300,20,32],
+["Ago","Acessórios",7900,40,65],
+["Ago","Móveis",12100,15,20],
+
+["Set","Eletrônicos",25000,29,40],
+["Set","Informática",16200,22,34],
+["Set","Acessórios",8500,43,70],
+["Set","Móveis",13000,16,22],
+
+["Out","Eletrônicos",27000,31,43],
+["Out","Informática",17500,23,37],
+["Out","Acessórios",9200,46,75],
+["Out","Móveis",14000,17,24],
+
+["Nov","Eletrônicos",31000,35,50],
+["Nov","Informática",19000,26,40],
+["Nov","Acessórios",10500,50,82],
+["Nov","Móveis",15500,19,27],
+
+["Dez","Eletrônicos",35000,40,55],
+["Dez","Informática",22000,30,45],
+["Dez","Acessórios",12000,55,90],
+["Dez","Móveis",18000,22,30]
+
+].map(([month,category,revenue,orders,units])=>({
+  month,
+  category,
+  revenue,
+  orders,
+  units
+}));
+
+const months=[
+  "Jan","Fev","Mar","Abr","Mai","Jun",
+  "Jul","Ago","Set","Out","Nov","Dez"
+];
+
+const categories=[
+  "Eletrônicos",
+  "Informática",
+  "Acessórios",
+  "Móveis"
+];
+
+const currency=value=>value.toLocaleString("pt-BR",{
+  style:"currency",
+  currency:"BRL"
+});
+
+let revenueChart,categoryChart;
+
+
+// ============================================
+// 3. FUNÇÕES DO DASHBOARD
+// ============================================
+
+function filteredData(){
+
+  const category=document.getElementById("categoryFilter").value;
+
+  return salesData.filter(row=>
+    category==="Todas" || row.category===category
+  );
+}
+
+
+function createCharts(){
+
+  revenueChart=new Chart(
+    document.getElementById("revenueChart"),
+    {
+      type:"line",
+
+      data:{
+        labels:months,
+
+        datasets:[{
+          label:"Receita",
+          data:[],
+          borderColor:"#20c9b5",
+          backgroundColor:"rgba(32,201,181,.10)",
+          fill:true,
+          tension:.4,
+          pointRadius:4,
+          pointBackgroundColor:"#20c9b5"
+        }]
+      },
+
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+
+        plugins:{
+          legend:{display:false}
+        },
+
+        scales:{
+          x:{
+            grid:{display:false},
+            ticks:{color:"#91a4b8"}
+          },
+
+          y:{
+            beginAtZero:true,
+            grid:{color:"#1d344a"},
+            ticks:{
+              color:"#91a4b8",
+              callback:v=>"R$ "+v/1000+"k"
+            }
+          }
+        }
+      }
+    }
+  );
+
+
+  categoryChart=new Chart(
+    document.getElementById("categoryChart"),
+    {
+      type:"doughnut",
+
+      data:{
+        labels:categories,
+
+        datasets:[{
+          data:[],
+          backgroundColor:[
+            "#20c9b5",
+            "#4389f5",
+            "#a78bfa",
+            "#fb923c"
+          ],
+          borderWidth:0,
+          hoverOffset:8
+        }]
+      },
+
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        cutout:"72%",
+
+        plugins:{
+          legend:{
+            position:"bottom",
+            labels:{
+              color:"#91a4b8",
+              padding:16,
+              usePointStyle:true,
+              font:{size:10}
+            }
+          }
+        }
+      }
+    }
+  );
+}
+
+
+function updateDashboard(){
+
+  const data=filteredData();
+
+  const revenue=data.reduce((s,x)=>s+x.revenue,0);
+  const orders=data.reduce((s,x)=>s+x.orders,0);
+  const units=data.reduce((s,x)=>s+x.units,0);
+
+  document.getElementById("revenueValue").textContent=currency(revenue);
+
+  document.getElementById("ordersValue").textContent=
+    orders.toLocaleString("pt-BR");
+
+  document.getElementById("ticketValue").textContent=
+    currency(orders?revenue/orders:0);
+
+  document.getElementById("productsValue").textContent=
+    units.toLocaleString("pt-BR");
+
+
+  revenueChart.data.datasets[0].data=months.map(m=>
+    data
+      .filter(x=>x.month===m)
+      .reduce((s,x)=>s+x.revenue,0)
+  );
+
+  revenueChart.update();
+
+
+  categoryChart.data.datasets[0].data=categories.map(c=>
+    data
+      .filter(x=>x.category===c)
+      .reduce((s,x)=>s+x.revenue,0)
+  );
+
+  categoryChart.update();
+
+
+  const tbody=document.getElementById("categoryTable");
+
+  tbody.replaceChildren();
+
+  categories.forEach(category=>{
+
+    const rows=data.filter(x=>x.category===category);
+
+    if(!rows.length)return;
+
+    const orders=rows.reduce((s,x)=>s+x.orders,0);
+    const units=rows.reduce((s,x)=>s+x.units,0);
+    const revenue=rows.reduce((s,x)=>s+x.revenue,0);
+
+    const tr=document.createElement("tr");
+
+    [category,orders,units,currency(revenue)].forEach((value,i)=>{
+
+      const td=document.createElement("td");
+
+      if(i===0){
+
+        const tag=document.createElement("span");
+
+        tag.className="category-tag";
+        tag.textContent=value;
+
+        td.appendChild(tag);
+
+      }else{
+
+        td.textContent=value;
+
+      }
+
+      tr.appendChild(td);
+
+    });
+
+    tbody.appendChild(tr);
+
+  });
+
+}
+
+
+document.getElementById("categoryFilter")
+  .addEventListener("change",updateDashboard);
+
+
+// ============================================
+// 4. AGENTE LOCAL DE PERGUNTAS
+// ============================================
+
+// O agente interpreta perguntas em português.
+// Os cálculos são feitos em JavaScript sobre salesData.
+// Esta versão não utiliza IA externa nem backend Python.
+
+const agentForm=document.getElementById("agentForm");
+const agentInput=document.getElementById("agentInput");
+const agentMessages=document.getElementById("agentMessages");
+const agentSend=document.getElementById("agentSend");
+const executionStatus=document.getElementById("executionStatus");
+
+
+function addAgentMessage(content,type){
+
+  const wrap=document.createElement("div");
+
+  wrap.className="agent-message "+type;
+
+  const author=document.createElement("small");
+
+  author.textContent=
+    type==="user"?"VOCÊ":"DATA PILOT AI AGENT";
+
+  const bubble=document.createElement("div");
+
+  bubble.className="agent-bubble";
+  bubble.textContent=content;
+
+  wrap.append(author,bubble);
+
+  agentMessages.appendChild(wrap);
+
+  agentMessages.scrollTop=agentMessages.scrollHeight;
+}
+
+
+function resetExecution(){
+
+  [
+    "step-question",
+    "step-tool",
+    "step-python",
+    "step-data",
+    "step-answer"
+  ].forEach(id=>{
+
+    const el=document.getElementById(id);
+
+    if(el){
+      el.classList.remove("active","done");
+    }
+
+  });
+
+}
+
+
+function normalizeText(value){
+
+  return value
+    .toLocaleLowerCase("pt-BR")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[?!.;,]/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+
+}
+
+
+function formatNumber(value){
+
+  return Number(value).toLocaleString("pt-BR");
+
+}
+
+
+// ============================================
+// 5. IDENTIFICAÇÃO DE CATEGORIA E PERÍODO
+// ============================================
+
+function getQuestionContext(question){
+
+  const q=normalizeText(question);
+
+  const monthMap={
+
+    janeiro:"Jan",
+    jan:"Jan",
+
+    fevereiro:"Fev",
+    fev:"Fev",
+
+    marco:"Mar",
+    mar:"Mar",
+
+    abril:"Abr",
+    abr:"Abr",
+
+    maio:"Mai",
+    mai:"Mai",
+
+    junho:"Jun",
+    jun:"Jun",
+
+    julho:"Jul",
+    jul:"Jul",
+
+    agosto:"Ago",
+    ago:"Ago",
+
+    setembro:"Set",
+    set:"Set",
+
+    outubro:"Out",
+    out:"Out",
+
+    novembro:"Nov",
+    nov:"Nov",
+
+    dezembro:"Dez",
+    dez:"Dez"
+
+  };
+
+
+  const month=Object.keys(monthMap).find(name=>
+    new RegExp("\\b"+name+"\\b").test(q)
+  );
+
+
+  const category=categories.find(name=>
+    q.includes(normalizeText(name))
+  );
+
+
+  let data=salesData.slice();
+
+  if(category){
+
+    data=data.filter(row=>
+      row.category===category
+    );
+
+  }
+
+  if(month){
+
+    data=data.filter(row=>
+      row.month===monthMap[month]
+    );
+
+  }
+
+  return{
+    q,
+    data,
+    category,
+    month:month?monthMap[month]:null
+  };
+
+}
+
+
+// ============================================
+// 6. CÁLCULOS DAS MÉTRICAS
+// ============================================
+
+function summarizeRows(rows){
+
+  return rows.reduce((acc,row)=>{
+
+    acc.revenue+=row.revenue;
+    acc.orders+=row.orders;
+    acc.units+=row.units;
+
+    return acc;
+
+  },{
+    revenue:0,
+    orders:0,
+    units:0
+  });
+
+}
+
+
+// ============================================
+// 7. INTERPRETAÇÃO E RESPOSTAS DO AGENTE
+// ============================================
+
+function answerSalesQuestion(question){
+
+  const {
+    q,
+    data,
+    category,
+    month
+  }=getQuestionContext(question);
+
+
+  if(!data.length){
+
+    return "Não encontrei registros para esse filtro na base demonstrativa.";
+
+  }
+
+
+  const totals=summarizeRows(data);
+
+  const money=value=>currency(value);
+
+  const periodText=month?" em "+month:"";
+
+  const categoryText=category
+    ?" na categoria "+category
+    :"";
+
+
+  // Identificação da intenção da pergunta
+
+  const wantsCompare=/compar|diferenca|comparacao|ranking/.test(q);
+
+  const wantsTicket=/ticket medio|valor medio por pedido|media por pedido/.test(q);
+
+  const wantsOrders=/pedido|pedidos|quantidade de vendas|numero de vendas/.test(q);
+
+  const wantsUnits=/unidade|unidades|produto vendido|produtos vendidos|quantos produtos/.test(q);
+
+  const wantsMonth=/mes|mensal|evolucao|ao longo do ano/.test(q);
+
+  const wantsBest=/maior|melhor|lider|principal|destaque|top/.test(q);
+
+  const wantsWorst=/menor|pior/.test(q);
+
+  const wantsRevenue=/receita|faturamento|vendeu|vendas|comercial/.test(q);
+
+
+  // COMPARAÇÃO DE CATEGORIAS
+
+  if(wantsCompare && !category && !month){
+
+    const ranking=categories.map(name=>{
+
+      const total=summarizeRows(
+        salesData.filter(row=>row.category===name)
+      );
+
+      return{name,...total};
+
+    }).sort((a,b)=>b.revenue-a.revenue);
+
+
+    return "Comparativo de receita por categoria (ano demonstrativo):\n"+
+      ranking.map((item,index)=>
+        (index+1)+". "+item.name+": "+money(item.revenue)
+      ).join("\n")+
+      "\n\nA categoria líder é "+
+      ranking[0].name+
+      ", com "+
+      money(ranking[0].revenue)+".";
+  }
+
+
+  // ANÁLISE MENSAL
+
+  if(wantsMonth && !month && !category){
+
+    const ranking=months.map(name=>{
+
+      const total=summarizeRows(
+        salesData.filter(row=>row.month===name)
+      );
+
+      return{name,...total};
+
+    });
+
+
+    const best=[...ranking].sort((a,b)=>
+      b.revenue-a.revenue
+    )[0];
+
+
+    const worst=[...ranking].sort((a,b)=>
+      a.revenue-b.revenue
+    )[0];
+
+
+    return "Análise mensal da receita:\n"+
+      ranking.map(item=>
+        item.name+": "+money(item.revenue)
+      ).join("\n")+
+      "\n\nMelhor mês: "+
+      best.name+
+      " ("+money(best.revenue)+")."+
+      "\nMenor receita: "+
+      worst.name+
+      " ("+money(worst.revenue)+").";
+
+  }
+
+
+  // IDENTIFICAÇÃO DE MELHOR OU PIOR RESULTADO
+
+  if(wantsBest || wantsWorst){
+
+    if(
+      !category &&
+      !month &&
+      !wantsMonth &&
+      (wantsRevenue || (!wantsOrders && !wantsUnits))
+    ){
+
+      const ranking=categories.map(name=>({
+
+        name,
+        ...summarizeRows(
+          salesData.filter(row=>row.category===name)
+        )
+
+      })).sort((a,b)=>b.revenue-a.revenue);
+
+
+      const item=wantsWorst
+        ?ranking[ranking.length-1]
+        :ranking[0];
+
+
+      return (wantsWorst
+        ?"A categoria com menor receita"
+        :"A categoria com maior receita"
+      )+
+      " é "+
+      item.name+
+      ", com "+
+      money(item.revenue)+
+      " no período demonstrativo.";
+
+    }
+
+
+    if(!month && !category){
+
+      const ranking=months.map(name=>({
+
+        name,
+        ...summarizeRows(
+          salesData.filter(row=>row.month===name)
+        )
+
+      })).sort((a,b)=>b.revenue-a.revenue);
+
+
+      const item=wantsWorst
+        ?ranking[ranking.length-1]
+        :ranking[0];
+
+
+      return (wantsWorst
+        ?"O mês com menor receita"
+        :"O melhor mês"
+      )+
+      " é "+
+      item.name+
+      ", com "+
+      money(item.revenue)+".";
+    }
+
+  }
+
+
+  // TICKET MÉDIO
+
+  if(wantsTicket){
+
+    return "O ticket médio"+
+      periodText+
+      categoryText+
+      " é "+
+      money(totals.orders?totals.revenue/totals.orders:0)+
+      ". Cálculo: receita total ("+
+      money(totals.revenue)+
+      ") dividida por "+
+      formatNumber(totals.orders)+
+      " pedidos.";
+
+  }
+
+
+  // TOTAL DE PEDIDOS
+
+  if(wantsOrders){
+
+    return "Foram registrados "+
+      formatNumber(totals.orders)+
+      " pedidos"+
+      periodText+
+      categoryText+
+      ".";
+
+  }
+
+
+  // TOTAL DE UNIDADES
+
+  if(wantsUnits){
+
+    return "Foram vendidas "+
+      formatNumber(totals.units)+
+      " unidades"+
+      periodText+
+      categoryText+
+      ".";
+
+  }
+
+
+  // RECEITA TOTAL
+
+  if(wantsRevenue || wantsBest || wantsWorst){
+
+    return "A receita total"+
+      periodText+
+      categoryText+
+      " foi de "+
+      money(totals.revenue)+
+      ". O conjunto analisado também registra "+
+      formatNumber(totals.orders)+
+      " pedidos e "+
+      formatNumber(totals.units)+
+      " unidades vendidas.";
+
+  }
+
+
+  // AJUDA
+
+  if(/ajuda|o que voce faz|que perguntas|como funciona/.test(q)){
+
+    return "Posso responder perguntas sobre:\n"+
+      "• Receita total e faturamento por categoria ou mês\n"+
+      "• Quantidade de pedidos e unidades vendidas\n"+
+      "• Ticket médio\n"+
+      "• Melhor/pior categoria e melhor/pior mês\n"+
+      "• Comparação e ranking das categorias\n\n"+
+      "Exemplos: “Qual categoria vendeu mais?”, “Quanto faturamos em março?” ou “Compare as categorias”.";
+
+  }
+
+
+  // PERGUNTA NÃO IDENTIFICADA
+
+  return "Ainda não identifiquei o tipo de análise solicitado. "+
+    "Posso consultar receita, pedidos, ticket médio, unidades, "+
+    "desempenho mensal e comparação entre categorias. "+
+    "Tente reformular a pergunta ou digite “ajuda”.";
+
+}
+
+
+// ============================================
+// 8. ATUALIZAÇÃO DO FLUXO DO AGENTE
+// ============================================
+
+function setStepDone(id){
+
+  const el=document.getElementById(id);
+
+  if(el){
+    el.classList.add("done");
+  }
+
+}
+
+
+// ============================================
+// 9. ENVIO E PROCESSAMENTO DAS PERGUNTAS
+// ============================================
+
+agentForm.addEventListener("submit",async event=>{
+
+  event.preventDefault();
+
+  const question=agentInput.value.trim();
+
+  if(!question)return;
+
+
+  // Exibe a pergunta do usuário
+
+  addAgentMessage(question,"user");
+
+  agentInput.value="";
+  agentSend.disabled=true;
+
+
+  resetExecution();
+
+
+  document.getElementById("step-question")
+    .classList.add("active","done");
+
+
+  executionStatus.textContent=
+    "Pergunta recebida. Interpretando a intenção...";
+
+
+  try{
+
+    // Identificação da ferramenta necessária
+
+    document.getElementById("step-tool")
+      .classList.add("active");
+
+
+    const normalized=normalizeText(question);
+
+
+    const tool=/ticket medio/.test(normalized)
+      ?"calcular_ticket_medio()"
+
+      :/pedido|pedidos/.test(normalized)
+      ?"contar_pedidos()"
+
+      :/unidade|produto/.test(normalized)
+      ?"contar_unidades()"
+
+      :/mes|mensal|evolucao/.test(normalized)
+      ?"receita_por_mes()"
+
+      :/compar|categoria|maior|melhor|pior/.test(normalized)
+      ?"receita_por_categoria()"
+
+      :"calcular_receita_total()";
+
+
+    setStepDone("step-tool");
+
+
+    // Execução local dos cálculos
+
+    document.getElementById("step-python")
+      .classList.add("active");
+
+
+    // Nesta versão, os cálculos são feitos no navegador,
+    // em JavaScript. A futura integração Python substituirá
+    // esta execução local.
+
+    const answer=answerSalesQuestion(question);
+
+
+    setStepDone("step-python");
+
+
+    // Retorno dos dados
+
+    document.getElementById("step-data")
+      .classList.add("active");
+
+    setStepDone("step-data");
+
+
+    // Resposta ao usuário
+
+    document.getElementById("step-answer")
+      .classList.add("active");
+
+
+    addAgentMessage(answer,"bot");
+
+
+    setStepDone("step-answer");
+
+
+    executionStatus.textContent=
+      "Análise concluída com dados da base demonstrativa. "+
+      "Ferramenta identificada: "+tool;
+
+
+  }catch(error){
+
+    console.error("Erro no agente Data Pilot:",error);
+
+
+    addAgentMessage(
+      "Não consegui processar essa pergunta. Tente novamente com uma pergunta sobre receita, pedidos, ticket médio, unidades ou categorias.",
+      "bot"
+    );
+
+
+    executionStatus.textContent=
+      "Ocorreu um erro ao analisar a pergunta.";
+
+
+  }finally{
+
+    agentSend.disabled=false;
+    agentInput.focus();
+
+  }
+
+});
+
+
+// ============================================
+// 10. BOTÕES DE SUGESTÕES
+// ============================================
+
+document.querySelectorAll(".agent-suggestions button")
+  .forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+      agentInput.value=button.dataset.query;
+
+      agentForm.requestSubmit();
+
+    });
+
+  });
+
+
+// ============================================
+// 11. INICIALIZAÇÃO DO DATA PILOT
+// ============================================
+
+createCharts();
+updateDashboard();
+
+</script>
+
+</body>
+</html>
+
